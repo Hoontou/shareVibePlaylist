@@ -6,23 +6,16 @@ const { PliData } = require('../models/PliData');
 const { Coverage } = require('puppeteer');
 
 router.post('/register', async (req, res) => {
-  const { token } = req.body; // client에서 전달받은 token
-  //서버에 토큰으로 겟요청 날리고 userdata에 저장
-  const userData = await axios.get('https://openapi.naver.com/v1/nid/me', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  const userInfo = userData.data.response;
+  const userInfo = req.body.data;
 
   const user = new User(userInfo);
   User.findOne({ id: userInfo.id }, (err, item) => {
     if (!item) {
       user.save((err, item) => {
         if (err) {
-          return res.status(400).json({ msg: 'err when saving mongodb' });
+          return res.status(400).json({ success: false });
         }
-        return res.status(200).send(userInfo);
+        return res.status(200).json({ success: true });
       });
     } else if (item) {
       if (item.nickname !== userInfo.nickname) {
@@ -33,7 +26,7 @@ router.post('/register', async (req, res) => {
           .updateOne({ $set: { profile_image: userInfo.profile_image } })
           .exec();
       }
-      return res.status(200).send(userInfo);
+      return res.status(200).json({ success: true });
     }
   });
 
