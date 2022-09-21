@@ -74,7 +74,7 @@ const getPliData = async (address, timer) => {
 };
 
 router.post('/postpli', (req, res) => {
-	if (!req.body.url.includes(vibe.naver.com)) {
+	if (!req.body.url.includes("vibe.naver.com")) {
 		return res.status(200).json({ success: 3 })
 	}
   PliData.findOne({ url: req.body.url }, async (err, item) => {
