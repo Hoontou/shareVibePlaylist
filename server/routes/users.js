@@ -101,15 +101,15 @@ router.get('/getcollections', async (req, res) => {
   if (!userCollections) {
     return res.status(200).json({});
   }
-  const collections = userCollections.map((value) => {
+  const userColl = userCollections.map((value) => {
     if (value.likeList[0]) {
       return value;
     }
     return null;
   });
-  const filtered = collections.filter(e => e != null);
+  const collections = userColl.filter(e => e != null);
   //리스트 널값 제거
-  return res.status(200).json({ success: 0, filtered });
+  return res.status(200).json({ success: 0, collections });
 });
 
 module.exports = router;
