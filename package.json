@@ -23,6 +23,7 @@
     "mongoose": "^6.4.6",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.19",
-    "puppeteer": "^15.5.0"
+    "puppeteer": "^15.5.0",
+    "puppeteer-core": "^18.0.3"
   }
 }

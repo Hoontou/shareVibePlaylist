@@ -74,11 +74,14 @@ const getPliData = async (address, timer) => {
 };
 
 router.post('/postpli', (req, res) => {
+	if (!req.body.url.includes(vibe.naver.com)) {
+		return res.status(200).json({ success: 3 })
+	}
   PliData.findOne({ url: req.body.url }, async (err, item) => {
     if (item) {
       return res.status(200).json({ success: 1, item }); //있으면 이미 있다고 전달.
     }
-    const pli = await getPliData(req.body.url, 3);
+    const pli = await getPliData(req.body.url, 5);
     if (!pli) {
       return res.status(200).json({ success: 3 }); //url이 잘못됐거나 크롤링이 제대로 작동안하면,
     }
