@@ -107,7 +107,9 @@ router.get('/getcollections', async (req, res) => {
     }
     return null;
   });
-  return res.status(200).json({ success: 0, collections });
+  const filtered = collections.filter(e => e != null);
+  //리스트 널값 제거
+  return res.status(200).json({ success: 0, filtered });
 });
 
 module.exports = router;
