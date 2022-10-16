@@ -98,4 +98,24 @@ router.post('/addToFavorite', (req, res) => {
   });
 });
 
+router.post('/likedpeople', async (req, res) => {
+  const favoriteList = await Favorite.find({ pliTo: req.body._id });
+
+  if (favoriteList) {
+    const list = await Promise.all(
+      favoriteList.map(async (item) => {
+        const a = item.userFrom;
+        const user = await User.find(
+          { id: a },
+          { _id: 1, nickname: 1, profile_image: 1 }
+        );
+        return [user[0].nickname, user[0]._id, user[0].profile_image];
+      })
+    );
+    return res.status(200).json({ success: true, list });
+  } else {
+    return res.status(200).json({ success: false });
+  }
+});
+
 module.exports = router;
