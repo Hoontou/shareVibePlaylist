@@ -74,9 +74,9 @@ const getPliData = async (address, timer) => {
 };
 
 router.post('/postpli', (req, res) => {
-	if (!req.body.url.includes("vibe.naver.com")) {
-		return res.status(200).json({ success: 3 })
-	}
+  if (!req.body.url.includes('vibe.naver.com')) {
+    return res.status(200).json({ success: 3 });
+  }
   PliData.findOne({ url: req.body.url }, async (err, item) => {
     if (item) {
       return res.status(200).json({ success: 1, item }); //있으면 이미 있다고 전달.
@@ -114,8 +114,8 @@ router.post('/getplis/latest', (req, res) => {
   console.log(req.body);
   PliData.find()
     .sort({ _id: -1 }) // 새로 저장된 순서로 정렬한다
-    .limit(12)
-    .skip((req.body.pageNum - 1) * 12)
+    .limit(16)
+    .skip((req.body.pageNum - 1) * 16)
     .exec((err, plis) => {
       if (err) {
         return res
@@ -130,8 +130,8 @@ router.post('/getplis/favorite', (req, res) => {
   console.log(req.body);
   PliData.find()
     .sort({ likes: -1 }) // 좋아요 많은 순서대로 정렬한다.
-    .limit(12)
-    .skip((req.body.pageNum - 1) * 12)
+    .limit(16)
+    .skip((req.body.pageNum - 1) * 16)
     .exec((err, plis) => {
       if (err) {
         return res
@@ -146,8 +146,8 @@ router.post('/getplis/oldest', (req, res) => {
   console.log(req.body);
   PliData.find()
     .sort({ _id: 1 }) // 오래된 순서대로 정렬한다.
-    .limit(12)
-    .skip((req.body.pageNum - 1) * 12)
+    .limit(16)
+    .skip((req.body.pageNum - 1) * 16)
     .exec((err, plis) => {
       if (err) {
         return res.status(200).json({

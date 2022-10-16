@@ -18,6 +18,9 @@ const userSchema = mongoose.Schema({
     type: String,
   },
   likeList: [String],
+  comment: {
+    type: String,
+  },
 });
 
 userSchema.methods.makePliList = function (list, callbackF) {

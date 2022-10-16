@@ -15,18 +15,33 @@ router.post('/register', async (req, res) => {
         if (err) {
           return res.status(400).json({ success: false });
         }
-        return res.status(200).json({ success: true });
+        let body = {
+          birthyear: item.birthyear,
+          gender: item.gender,
+          id: item.id,
+          nickname: item.nickname,
+          profile_image: item.profile_image,
+          comment: item.comment,
+        };
+        return res.status(200).json({ success: 1, userData: body });
       });
     } else if (item) {
-      if (item.nickname !== userInfo.nickname) {
-        item.updateOne({ $set: { nickname: userInfo.nickname } }).exec();
-      }
+      let body = {
+        birthyear: item.birthyear,
+        gender: item.gender,
+        id: item.id,
+        nickname: item.nickname,
+        profile_image: item.profile_image,
+        comment: item.comment,
+      };
       if (item.profile_image !== userInfo.profile_image) {
         item
           .updateOne({ $set: { profile_image: userInfo.profile_image } })
           .exec();
+        body.profile_image = userInfo.profile_image;
       }
-      return res.status(200).json({ success: true });
+
+      return res.status(200).json({ success: 2, userData: body });
     }
   });
 
@@ -53,6 +68,17 @@ router.post('/register', async (req, res) => {
   //그후 유저정보를 클라이언트로 넘겨줌
   // res.status(200).send(userInfo);
 }); //사인 인
+
+router.post('/auth', (req, res) => {
+  User.findOne({ id: req.body.id }, (err, item) => {
+    if (!item) {
+      return res.status(200).json({ auth: 0 });
+    }
+    if (item) {
+      return res.status(200).json({ auth: 1 });
+    }
+  });
+});
 
 router.post('/getfavorite', async (req, res) => {
   //먼저 유저아이디로 likelist를 가져옴
@@ -107,9 +133,54 @@ router.get('/getcollections', async (req, res) => {
     }
     return null;
   });
-  const collections = userColl.filter(e => e != null);
+  const collections = userColl.filter((e) => e != null);
   //리스트 널값 제거
   return res.status(200).json({ success: 0, collections });
+});
+
+router.post('/update', (req, res) => {
+  console.log(req.body);
+  User.findOne({ id: req.body.id }, (err, item) => {
+    if (item) {
+      let body = {
+        birthyear: req.body.birthyear,
+        gender: req.body.gender,
+        id: item.id,
+        nickname: req.body.nickname,
+        profile_image: item.profile_image,
+        comment: req.body.comment,
+      };
+      item
+        .updateOne({
+          $set: {
+            birthyear: req.body.birthyear,
+            gender: req.body.gender,
+            comment: req.body.comment,
+            nickname: req.body.nickname,
+          },
+        })
+        .exec();
+      return res.status(200).json({ success: true, userData: body });
+    } else {
+      return res.status(200).json({ success: false });
+    }
+  });
+});
+
+router.post('/getuserinfo', (req, res) => {
+  User.findOne({ _id: req.body._id }, (err, item) => {
+    if (item) {
+      let body = {
+        profile_image: item.profile_image,
+        birthyear: item.birthyear,
+        gender: item.gender,
+        comment: item.comment,
+      };
+      return res.status(200).json({ success: true, userData: body });
+    } else {
+      return res.status(200).json({ success: false });
+    }
+  });
 });
 
 module.exports = router;
