@@ -71,7 +71,6 @@ router.post('/register', async (req, res) => {
 
 router.post('/auth', (req, res) => {
   User.findOne({ id: req.body.id }, (err, item) => {
-    console.log(item);
     if (!item) {
       return res.status(200).json({ auth: 0 });
     }
@@ -139,8 +138,15 @@ router.get('/getcollections', async (req, res) => {
   return res.status(200).json({ success: 0, collections });
 });
 
-router.post('/update', (req, res) => {
-  console.log(req.body);
+router.post('/update', async (req, res) => {
+  //바꾸려는 닉네임이 사용중인지 먼저 확인한다.
+  const item = await User.find({ nickname: req.body.nickname });
+  if (item.length !== 0) {
+    if (item[0].id !== req.body.id) {
+      return res.status(200).json({ success: 1 });
+    }
+  }
+  //사용중이 아니면 받은정보로 바꾼다.
   User.findOne({ id: req.body.id }, (err, item) => {
     if (item) {
       let body = {
@@ -161,7 +167,7 @@ router.post('/update', (req, res) => {
           },
         })
         .exec();
-      return res.status(200).json({ success: true, userData: body });
+      return res.status(200).json({ success: 2, userData: body });
     } else {
       return res.status(200).json({ success: false });
     }

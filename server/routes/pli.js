@@ -111,7 +111,6 @@ router.post('/getpli', (req, res) => {
 }); // 플리 세부정보 페이지에서 오는 요청
 
 router.post('/getplis/latest', (req, res) => {
-  console.log(req.body);
   PliData.find()
     .sort({ _id: -1 }) // 새로 저장된 순서로 정렬한다
     .limit(16)
@@ -127,7 +126,6 @@ router.post('/getplis/latest', (req, res) => {
 }); //랜딩페이지에서 오는 요청 플리를 디비에서 가져와 클라이언트에 보냄
 
 router.post('/getplis/favorite', (req, res) => {
-  console.log(req.body);
   PliData.find()
     .sort({ likes: -1 }) // 좋아요 많은 순서대로 정렬한다.
     .limit(16)
@@ -143,7 +141,6 @@ router.post('/getplis/favorite', (req, res) => {
 }); //랜딩페이지에서 오는 요청 플리를 디비에서 가져와 클라이언트에 보냄
 
 router.post('/getplis/oldest', (req, res) => {
-  console.log(req.body);
   PliData.find()
     .sort({ _id: 1 }) // 오래된 순서대로 정렬한다.
     .limit(16)
@@ -172,8 +169,6 @@ router.get('/getplis/searchpli', (req, res) => {
     });
 });
 
-router.get('/getpliby_id', (req, res) => {
-  console.log(req.body);
-});
+router.get('/getpliby_id', (req, res) => {});
 
 module.exports = router;
