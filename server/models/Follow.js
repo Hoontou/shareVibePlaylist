@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const LikeColSchema = mongoose.Schema({
+const FollowSchema = mongoose.Schema({
   userFrom: {
     type: String,
   },
@@ -10,6 +10,6 @@ const LikeColSchema = mongoose.Schema({
   },
 });
 
-const LikeCol = mongoose.model('LikeCol', LikeColSchema);
+const Follow = mongoose.model('Follow', FollowSchema);
 
-module.exports = { LikeCol };
+module.exports = { Follow };

@@ -71,6 +71,7 @@ router.post('/register', async (req, res) => {
 
 router.post('/auth', (req, res) => {
   User.findOne({ id: req.body.id }, (err, item) => {
+    console.log(item);
     if (!item) {
       return res.status(200).json({ auth: 0 });
     }

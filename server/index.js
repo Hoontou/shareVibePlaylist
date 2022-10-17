@@ -24,6 +24,7 @@ mongoose
 app.use('/api/users', require('./routes/users'));
 app.use('/api/pli', require('./routes/pli'));
 app.use('/api/favorite', require('./routes/favorite'));
+app.use('/api/follow', require('./routes/follow'));
 
 app.get('/', (req, res) => {
   res.send('hello');
