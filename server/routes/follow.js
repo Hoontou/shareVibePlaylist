@@ -6,7 +6,6 @@ const { PliData } = require('../models/PliData');
 const { User } = require('../models/User');
 
 router.post('/getfollowed', (req, res) => {
-  console.log(req.body);
   return res.status(200).json({ success: true });
 });
 
@@ -100,6 +99,28 @@ router.post('/addToFollow', (req, res) => {
       return res.status(200).json({ followSuccess: true });
     }
   });
+});
+
+router.post('/followpeopleMyvibefrom', async (req, res) => {
+  const FollowList = await Follow.find({ userFrom: req.body.userFrom });
+  if (FollowList.length !== 0) {
+    const list = await Promise.all(
+      FollowList.map(async (item) => {
+        const a = item.userTo;
+        const user = await User.find(
+          { _id: a },
+          { _id: 1, nickname: 1, profile_image: 1 }
+        );
+        console.log(user);
+        return [user[0].nickname, user[0]._id, user[0].profile_image];
+      })
+    );
+    return res.status(200).json({ success: true, list });
+  } else if (FollowList.length == 0) {
+    return res.status(200).json({ success: true, list: FollowList });
+  } else {
+    return res.status(200).json({ success: false });
+  }
 });
 
 module.exports = router;
