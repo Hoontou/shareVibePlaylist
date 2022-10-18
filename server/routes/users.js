@@ -92,7 +92,7 @@ router.post('/getfavorite', async (req, res) => {
   try {
     //likelist로 맵을 돌려서 하나하나 찾아서 변수에 담아주고
     const likePli = await Promise.all(
-      like_id[0].likeList.map(async (pli_id) => {
+      like_id[0].likeList.reverse().map(async (pli_id) => {
         const pli = await PliData.find({ _id: pli_id });
         return pli[0];
       })
