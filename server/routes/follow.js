@@ -111,7 +111,6 @@ router.post('/followpeopleMyvibefrom', async (req, res) => {
           { _id: a },
           { _id: 1, nickname: 1, profile_image: 1 }
         );
-        console.log(user);
         return [user[0].nickname, user[0]._id, user[0].profile_image];
       })
     );
