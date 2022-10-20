@@ -99,11 +99,11 @@ router.post('/getpli', (req, res) => {
   PliData.findOne({ _id: req.body._id }, (err, pli) => {
     if (err) {
       return res
-        .status(400)
+        .status(200)
         .json({ success: false, msg: 'err when finding DB' });
     } else if (!pli) {
       return res
-        .status(400)
+        .status(200)
         .json({ success: false, msg: "there's no pli in DB" });
     }
     return res.status(200).json({ success: true, pli });

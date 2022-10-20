@@ -65,10 +65,11 @@ router.post('/removeFromFavorite', (req, res) => {
 });
 
 router.post('/addToFavorite', (req, res) => {
-  const favorite = new Favorite(req.body);
+  const reqBody = { pliTo: req.body.pliTo, userFrom: req.body.userFrom };
+  const favorite = new Favorite(reqBody);
   //favorite 에다가 추가하고 PliData에 Likes를 1더한다.
   favorite.save((err, doc) => {
-    if (err) return res.status(400).send(err);
+    if (err) return res.status(400).json({ msg: err });
     // pliData에 likes를 1 더한다.
     PliData.findOneAndUpdate(
       { _id: req.body.pliTo },
@@ -99,7 +100,7 @@ router.post('/addToFavorite', (req, res) => {
 });
 
 router.post('/likedpeople', async (req, res) => {
-  const favoriteList = await Favorite.find({ pliTo: req.body._id });
+  const favoriteList = await Favorite.find({ pliTo: req.body.pliTo });
 
   if (favoriteList) {
     const list = await Promise.all(
