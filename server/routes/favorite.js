@@ -100,7 +100,7 @@ router.post('/addToFavorite', (req, res) => {
 });
 
 router.post('/likedpeople', async (req, res) => {
-  const favoriteList = await Favorite.find({ pliTo: req.body.pliTo });
+  const favoriteList = await Favorite.find({ pliTo: req.body._id });
 
   if (favoriteList) {
     const list = await Promise.all(
