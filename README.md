@@ -9,4 +9,5 @@ using MERN
 
 첫 풀스택 APP
 
-vibePli-client 리파지토리의 내용들이 client 폴더 내에 위치해야 함.
+
+https://www.notion.so/f831e8de620a4be0aa392092fa745897
