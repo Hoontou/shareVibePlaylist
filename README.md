@@ -1,4 +1,6 @@
 # sharePliVIbe
+사이트주소
+https://vibepli.com/
 vibe playlist share app
 
 네이버 바이브 플랫폼
