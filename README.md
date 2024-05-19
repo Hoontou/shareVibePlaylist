@@ -17,8 +17,8 @@ https://github.com/Hoontou/shareVibePlaylist-client
 
 ## 프로젝트 구조
 
-![프로젝트 구조](./readmeImgs/구조.png)
+![프로젝트 구조](./READMEimgs/구조.png)
 
 ## ERD
 
-![ERD](./readmeImgs/ERD.png)
+![ERD](./READMEimgs/ERD.png)
